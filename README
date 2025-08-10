@@ -1,49 +1,85 @@
-# Modular Dashboard (FastAPI + React) — Crypto Widgets
+# Crypto Dashboard API
 
-This project implements a small modular dashboard with 4 widgets:
+A modular cryptocurrency dashboard backend providing real-time market data through multiple specialized widgets.
 
-- Top Coins (supports "load more" lazy loading)
-- Price Movements (top gainers & losers)  
-- Alerts (coins with 24h change above threshold)
-- Market Cap (global market cap & active coins)
+## Widgets Overview
 
-Backend: FastAPI (Light DDD modules)
+### 1. Top Coins Widget
+- Lists cryptocurrencies sorted by market capitalization
+- Supports pagination with configurable page size
+- Data includes: price, market cap, and ranking
+- Cached responses to optimize performance
 
-## Quickstart
+### 2. Price Movements Widget
+- Tracks significant price changes in the last 24 hours
+- Shows top gainers and top losers
+- Configurable number of entries (1-20)
+- Real-time percentage change tracking
 
-### Using Docker (Recommended)
+### 3. Market Cap Widget
+- Global cryptocurrency market statistics
+- Total market capitalization in USD
+- Number of active cryptocurrencies
+- Auto-updates every minute
 
+### 4. Price Alerts Widget
+- Monitors price movements above threshold
+- Configurable alert threshold percentage
+- Focused on top 100 cryptocurrencies
+- Includes price change details and timestamps
+
+## Setup Instructions
+
+### Prerequisites
+- Docker and Docker Compose (for containerized setup)
+- Python 3.11+ (for manual setup)
+- Redis (automatically handled in Docker setup)
+
+### Option 1: Docker Setup (Recommended)
 ```bash
-# Build and start services
+# Clone the repository
+git clone <repository-url>
+cd be_dashboard
+
+# Build and start all services
 docker-compose up -d
 
-# View logs
-docker-compose logs -f
+# Verify services are running
+docker-compose ps
 
-# Stop services
-docker-compose down
+# Check application logs
+docker-compose logs -f api
 ```
 
-The API will be available at <http://localhost:8000>
-
-### Manual Setup
-
+### Option 2: Manual Setup
 ```bash
+# Clone and enter directory
+git clone <repository-url>
+cd be_dashboard
+
 # Create and activate virtual environment
-cd backend
 python -m venv .venv
 source .venv/bin/activate    # Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Start development server
+# Start Redis (required)
+docker-compose up -d redis
+
+# Start the application
 uvicorn app.main:app --reload --port 8000
 ```
 
 ## API Documentation
+- Interactive API docs: http://localhost:8000/docs
+- Alternative docs UI: http://localhost:8000/redoc
 
-Once running, visit:
+## Environment Variables
+- `REDIS_URL`: Redis connection string (default: redis://redis:6379/0)
+- Default port: 8000 (can be modified in docker-compose.yml)
 
-- Swagger UI: <http://localhost:8000/docs>
-- ReDoc: <http://localhost:8000/redoc>
+## Development
+All endpoints support CORS for localhost development:
+- http://localhost:3000 (React default)
+- http://localhost:5173 (Vite default)
