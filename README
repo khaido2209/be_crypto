@@ -1,0 +1,49 @@
+# Modular Dashboard (FastAPI + React) — Crypto Widgets
+
+This project implements a small modular dashboard with 4 widgets:
+
+- Top Coins (supports "load more" lazy loading)
+- Price Movements (top gainers & losers)  
+- Alerts (coins with 24h change above threshold)
+- Market Cap (global market cap & active coins)
+
+Backend: FastAPI (Light DDD modules)
+
+## Quickstart
+
+### Using Docker (Recommended)
+
+```bash
+# Build and start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+The API will be available at <http://localhost:8000>
+
+### Manual Setup
+
+```bash
+# Create and activate virtual environment
+cd backend
+python -m venv .venv
+source .venv/bin/activate    # Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start development server
+uvicorn app.main:app --reload --port 8000
+```
+
+## API Documentation
+
+Once running, visit:
+
+- Swagger UI: <http://localhost:8000/docs>
+- ReDoc: <http://localhost:8000/redoc>
